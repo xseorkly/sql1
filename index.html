@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL pas à pas — Cours, TP et évaluations (base Sephora)</title>
+<meta name="description" content="Cours de SQL pour grands débutants : explications simples, TP Sephora et Astérix, exercices corrigés automatiquement, quiz et évaluations notées.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237a2e5c'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='white' font-family='monospace' font-weight='bold'%3ESQL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+  <a class="brand" href="#/"><span class="brand-logo">SQL</span><span class="brand-text">pas à pas<small>Licence 1 · base Sephora</small></span></a>
+  <div class="top-right">
+    <span class="engine" id="engineStatus" title="Moteur SQL dans le navigateur">⏳ moteur SQL…</span>
+    <a class="who" href="#/notes" id="whoLink">👤 Mes notes</a>
+  </div>
+</header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Navigation principale"></nav>
+  <main id="main" class="main" tabindex="-1"></main>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<script src="assets/vendor/sql-wasm.js"></script>
+<script src="assets/js/helpers.js"></script>
+<script src="assets/js/content/cours.js"></script>
+<script src="assets/js/content/tp.js"></script>
+<script src="assets/js/content/exercices.js"></script>
+<script src="assets/js/content/quiz.js"></script>
+<script src="assets/js/content/evaluations.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
