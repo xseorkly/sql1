@@ -674,7 +674,7 @@ ${H.box('astuce', 'Petite phrase pour s\'en souvenir', '<p><b>« Sophie Fait Whi
 <div class="kicker">📌 À garder sous les yeux</div>
 <h1>Fiche mémo</h1>
 <div class="box box-retenir"><div class="box-title">📄 La fiche à imprimer pour l'évaluation</div><p>Une feuille <b>A4 recto-verso</b>, à <b>plier en deux</b> : un petit livret de 4 pages avec, pour chaque notion, une explication simple, un exemple et son résultat, et les pièges à éviter.</p>
-<div class="btn-row"><a class="btn" href="assets/docs/fiche-memo-sql.pdf" download>⬇ PDF en couleur</a><a class="btn" href="assets/docs/fiche-memo-sql-noir-et-blanc.pdf" download>⬇ PDF noir et blanc (à imprimer)</a><a class="btn ghost" href="assets/docs/fiche-memo-sql.pdf" target="_blank" rel="noopener">Ouvrir dans un onglet</a></div>
+<div class="btn-row"><a class="btn teal" href="fiche-memo.html">🌐 Version web de la fiche</a><a class="btn" href="assets/docs/fiche-memo-sql.pdf" download>⬇ PDF en couleur</a><a class="btn" href="assets/docs/fiche-memo-sql-noir-et-blanc.pdf" download>⬇ PDF noir et blanc (à imprimer)</a><a class="btn ghost" href="assets/docs/fiche-memo-sql.pdf" target="_blank" rel="noopener">Ouvrir dans un onglet</a></div>
 <p class="expected">Impression : A4 paysage, <b>recto-verso en retournant sur le bord court</b>, taille réelle (100 %). Plier au milieu : la page 1 devient la couverture.</p></div>
 ${H.code("SELECT   ...   -- 1. Qu'est-ce que j'affiche ?\nFROM     ...   -- 2. Dans quel tableau ?\nWHERE    ...   -- 3. Quels produits je garde ?\nGROUP BY ...   -- 4. Je fais des tas par… ?\nHAVING   ...   -- 5. Quels tas je garde ?\nORDER BY ...   -- 6. Dans quel ordre ?\nLIMIT    ... ; -- 7. Combien de lignes au maximum ?")}
 ${H.table(['Je veux…', 'J\'écris'], [

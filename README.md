@@ -12,6 +12,7 @@ Site de cours de SQL pour grands débutants (Licence 1), entièrement statique, 
 - **44 exercices** sur 8 niveaux, **corrigés automatiquement** (la requête de l'élève est exécutée et son résultat comparé au corrigé).
 - **Un quiz noté « Ai-je compris ? »** (/20) : QCM, résultats à trouver à la main, requêtes, questions ouvertes avec auto-évaluation.
 - **Deux évaluations d'une heure** (/20) : un **écrit sur table** (exécution désactivée, chrono) et un **TP sur ordinateur**. Correction, note, corrigé détaillé, téléchargement de la copie, vue enseignant (sujet + corrigé).
+- **La fiche mémo expliquée** : page web (`fiche-memo.html`) et PDF couleur / noir et blanc (livret A5, A4 recto-verso plié en 2) dans `assets/docs/`.
 - **Un bac à sable SQL** et la page **Mes notes** (progression, relevé téléchargeable).
 
 ## Fonctionnement technique
