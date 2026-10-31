@@ -702,7 +702,7 @@
       card('#/tp2', '🛡️', 'TP2 — Astérix', 'Les requêtes du TP2 expliquées simplement.', 'gaulois, villages, potions') +
       card('#/eval-ecrit', '📝', 'Évaluation écrite', '1 heure, comme sur table. Correction et note sur 20.', noteTxt('ecrit')) +
       card('#/eval-tp', '💻', 'Évaluation TP', '1 heure sur ordinateur, requêtes corrigées automatiquement.', noteTxt('tp')) +
-      card('#/memo', '📄', 'Fiche mémo à imprimer', 'Une feuille A4 recto, pliée en deux : tout ce qu\'il faut retenir pour l\'évaluation.', 'PDF à télécharger') +
+      card('#/memo', '📄', 'Fiche mémo à imprimer', 'Une feuille A4 recto-verso pliée en livret : tout le cours expliqué, avec exemples, pour l\'évaluation.', 'PDF à télécharger') +
       '</div>' +
       H.box('idee', 'Comment utiliser ce site', '<ul><li>Lis <b>un chapitre à la fois</b>, puis réponds au petit quiz en bas de la page.</li><li>Les cadres noirs avec un bouton <b>▶ Exécuter</b> sont de vraies requêtes : modifie-les, essaie, trompe-toi, tu ne peux rien casser.</li><li>Tes réponses et tes notes sont <b>gardées dans ton navigateur</b> (sur cet ordinateur). Tu les retrouves dans <a href="#/notes">Mes notes</a>.</li></ul>');
     function card(href, ico, t, p, meta) { return '<a class="card" href="' + href + '"><div class="ico">' + ico + '</div><h3>' + t + '</h3><p>' + p + '</p><div class="meta">' + meta + '</div></a>'; }
