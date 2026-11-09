@@ -638,6 +638,8 @@
       '<h4>Évaluations</h4>' +
       link('#/eval-ecrit', '📝', 'Écrit sur table') +
       link('#/eval-tp', '💻', 'TP sur ordinateur') +
+      '<h4>Partie 2 · Les jointures</h4>' +
+      link('sql2/', '🔗', 'SQL2 · Cours et CC2') +
       '<h4>Outils</h4>' +
       link('#/memo', '📌', 'Fiche mémo') +
       link('#/notes', '📊', 'Mes notes');
@@ -702,6 +704,7 @@
       card('#/tp2', '🛡️', 'TP2 — Astérix', 'Les requêtes du TP2 expliquées simplement.', 'gaulois, villages, potions') +
       card('#/eval-ecrit', '📝', 'Évaluation écrite', '1 heure, comme sur table. Correction et note sur 20.', noteTxt('ecrit')) +
       card('#/eval-tp', '💻', 'Évaluation TP', '1 heure sur ordinateur, requêtes corrigées automatiquement.', noteTxt('tp')) +
+      card('sql2/', '🔗', 'SQL2 — Les jointures', 'La suite du cours sur mini_etudiants.sqlite et World.db3 : 9 leçons, 130 exercices et 2 CC2 blancs.', 'Nouveau : préparer le CC2 du 5 janvier') +
       card('#/memo', '📄', 'Fiche mémo à imprimer', 'Une feuille A4 recto-verso pliée en livret : tout le cours expliqué, avec exemples, pour l\'évaluation.', 'PDF à télécharger') +
       '</div>' +
       H.box('idee', 'Comment utiliser ce site', '<ul><li>Lis <b>un chapitre à la fois</b>, puis réponds au petit quiz en bas de la page.</li><li>Les cadres noirs avec un bouton <b>▶ Exécuter</b> sont de vraies requêtes : modifie-les, essaie, trompe-toi, tu ne peux rien casser.</li><li>Tes réponses et tes notes sont <b>gardées dans ton navigateur</b> (sur cet ordinateur). Tu les retrouves dans <a href="#/notes">Mes notes</a>.</li></ul>');
