@@ -42,7 +42,9 @@
       const ok=answer.trim().replace(',','.')===String(q.sql).trim().replace(',','.');
       return{points:ok?1:0,message:ok?'Bonne réponse !':'Le nombre est différent du résultat attendu.'};
     }
-    const a=result(execute(q.db,answer)),b=result(execute(q.db,q.sql));
+    const actualSets=execute(q.db,answer),expectedSets=execute(q.db,q.sql);
+    const a=result(actualSets),b=result(expectedSets);
+    if(expectedSets.length>1){const ok=actualSets.length===expectedSets.length&&actualSets.every((x,i)=>x.columns.length===expectedSets[i].columns.length&&JSON.stringify(x.values)===JSON.stringify(expectedSets[i].values));if(!ok)return{points:0,message:'Cette question attend plusieurs résultats SQL. Exécute toutes les requêtes demandées.',actual:a,expected:b};}
     const ra=a.values.map(x=>JSON.stringify(x)),rb=b.values.map(x=>JSON.stringify(x));
     const identical=JSON.stringify(ra)===JSON.stringify(rb);
     const sameUnordered=JSON.stringify(ra.slice().sort())===JSON.stringify(rb.slice().sort());
@@ -50,6 +52,8 @@
     if(identical&&a.columns.length===b.columns.length){points=1;message='Exact : mêmes valeurs, même ordre et même nombre de colonnes.'}
     else if(sameUnordered&&a.columns.length===b.columns.length){points=.75;message='Bonnes lignes, mais ordre différent : relis ORDER BY.'}
     else if(a.values.length===b.values.length&&a.values.length>0&&a.columns.length!==b.columns.length){points=.25;message='Même nombre de lignes, mais colonnes différentes : relis SELECT.'}
+    if(points===1&&/\bORDER\s+BY\b/i.test(q.sql)&&!/\bORDER\s+BY\b/i.test(answer)){points=.75;message='Résultat présent, mais ORDER BY est obligatoire lorsque le sujet impose un tri.';}
+    if(points===1&&q.db==='world'&&(D.official.includes(q)||D.examA.includes(q)||D.examB.includes(q))&&(!/\bJOIN\b/i.test(answer)||!/\bON\b/i.test(answer))){points=.75;message='Le résultat est identique, mais la consigne du poly exige JOIN ... ON.';}
     return{points,message,actual:a,expected:b};
   }
   function feedback(q,r){
@@ -236,6 +240,7 @@
   });
   $('menuToggle').onclick=()=>{const open=!$('side').classList.contains('open');$('side').classList.toggle('open',open);$('overlay').classList.toggle('show',open);$('menuToggle').setAttribute('aria-expanded',String(open))};
   $('overlay').onclick=()=>{$('side').classList.remove('open');$('overlay').classList.remove('show')};
+  document.querySelector('.skip')?.addEventListener('click',e=>{e.preventDefault();main.focus();});
   window.addEventListener('hashchange',render);
   render();
   (async()=>{
