@@ -149,7 +149,7 @@
     const groups={A:'Villes et pays',B:'Langues et pays',C:'Capitales',D:'Calculer après JOIN',E:'Trois tables'};
     main.innerHTML=pageHeader('Support du professeur','Les 20 requêtes du polycopié','Les vingt questions de World.db3, numérotées et classées exactement en A, B, C, D et E, avec des solutions expliquées.')+
     dbMessage('world')+schema('world')+progress(D.official)+
-    `<div class="section-tabs">${Object.keys(groups).map(k=>`<a href="#part${k}">${k} · ${groups[k]}</a>`).join('')}</div>`+
+    `<div class="section-tabs">${Object.keys(groups).map(k=>`<a href="#/poly" data-scroll="part${k}">${k} · ${groups[k]}</a>`).join('')}</div>`+
     Object.keys(groups).map(k=>`<section id="part${k}"><h2>${k}. ${groups[k]}</h2>${D.official.filter(q=>q.section===k).map(q=>qCard(q)).join('')}</section>`).join('');
   }
   function exam(name){
@@ -212,6 +212,7 @@
     $('side').classList.remove('open');$('overlay').classList.remove('show');window.scrollTo(0,0);
     document.title=(main.querySelector('h1')?.textContent||'SQL2')+' — SQL pas à pas';
   }
+  main.addEventListener('click',e=>{const a=e.target.closest('[data-scroll]');if(a){e.preventDefault();document.getElementById(a.dataset.scroll)?.scrollIntoView({behavior:'smooth'});}});
   main.addEventListener('input',e=>{
     if(e.target.id?.startsWith('answer-')){state.answers[e.target.id.slice(7)]=e.target.value;save();}
   });
