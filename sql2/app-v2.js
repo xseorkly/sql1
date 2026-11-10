@@ -31,7 +31,7 @@
   function execute(db,sql){
     const base=baseFor(db);
     if(!env.sql||!base)throw Error(db==='world'?'Importe le fichier World.db3 pour exécuter cette requête.':'Le moteur SQL n’est pas prêt.');
-    if(db==='world'&&/\bCROSS\s+JOIN\b/i.test(sql)&&!/\bLIMIT\b/i.test(sql))throw Error('Produit cartésien géant : ajoute un LIMIT pour éviter de bloquer ton navigateur.');
+    if(db==='world'&&(/\bCROSS\s+JOIN\b/i.test(sql)||/\bFROM\s+(?:City|Country)\b[^;]*?,\s*(?:City|Country)\b/i.test(sql))&&!/\bLIMIT\b/i.test(sql))throw Error('Produit cartésien géant : ajoute un LIMIT pour éviter de bloquer ton navigateur.');
     const clone=new env.sql.Database(new Uint8Array(base.export()));
     try{return clone.exec(sql).map(x=>({columns:x.columns,values:x.values}))}finally{clone.close()}
   }
@@ -65,6 +65,23 @@
     const done=items.filter(q=>state.passed[q.id]).length,pct=Math.round(100*done/Math.max(items.length,1));
     return`<div class="panel"><div class="progresslabel"><span>Exercices maîtrisés</span><strong>${done} / ${items.length}</strong></div><div class="progressbar"><div style="width:${pct}%"></div></div><p class="tip">Une réponse est marquée acquise lorsqu’elle est exacte. Les données restent dans ce navigateur.</p></div>`;
   }
+  function clauseByClause(sql){
+    if(!/^\s*(SELECT|WITH)\b/i.test(sql))return'';
+    const terms=[...sql.matchAll(/\b(SELECT|FROM|JOIN|ON|WHERE|GROUP\s+BY|HAVING|ORDER\s+BY|LIMIT)\b/gi)];
+    const details={
+      'SELECT':'**Ce que l\'on affiche** : les colonnes et les éventuels calculs demandés.',
+      'FROM':'**Table de départ** : c\'est le premier tableau du raisonnement.',
+      'JOIN':'**Table ajoutée** : une nouvelle table fournit les informations qui manquent.',
+      'ON':'**Lien entre les tables** : les deux identifiants doivent correspondre ; ici il faut vérifier la clé.',
+      'WHERE':'**Filtre des lignes** : cette condition ne conserve que les lignes répondant à l\'énoncé.',
+      'GROUP BY':'**Regroupement** : les lignes sont réunies pour calculer un total ou une moyenne par groupe.',
+      'HAVING':'**Filtre des groupes** : on sélectionne des groupes d\'après COUNT, SUM ou AVG.',
+      'ORDER BY':'**Classement** : ASC est croissant, DESC décroissant ; les critères sont appliqués dans l\'ordre.',
+      'LIMIT':'**Nombre final** : seul le nombre demandé de premières lignes est conservé après le tri.'
+    };
+    return'<details><summary>Comprendre la requête clause par clause</summary><ol>'+
+      terms.map((m,i)=>{const name=m[1].replace(/\s+/g,' ').toUpperCase();const start=m.index+m[0].length,end=i+1<terms.length?terms[i+1].index:sql.length;const portion=sql.slice(start,end).replace(/;\s*$/,'').trim();return'<li><strong>'+esc(name)+'</strong> : '+details[name].replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')+'<div class="tip"><code>'+esc(portion)+'</code></div></li>'}).join('')+'</ol></details>';
+  }
   function qCard(q,exam=false,prefix=''){
     const value=state.answers[q.id]??(q.kind==='fix'?q.wrong||'':'');
     const input=q.kind==='numeric'?`<input type="text" id="answer-${q.id}" placeholder="Écris le nombre" value="${esc(value)}">`:
@@ -72,7 +89,7 @@
     return `<article class="exercise" id="item-${q.id}"><div class="top"><b>${esc(prefix||q.id)}</b><span class="difficulty">${esc(q.section||q.group||q.db)}</span>${state.passed[q.id]&&!exam?'<span class="chip">✓ maîtrisé</span>':''}</div><h3>${esc(q.question)}</h3>${q.expected?`<p class="tip">Indication du poly : ${esc(q.expected)}</p>`:''}${input}
     ${!exam?`<div class="btn-row"><button class="smallbtn" data-action="verify" data-id="${q.id}">▶ Vérifier</button><button class="smallbtn outline" data-action="hint" data-id="${q.id}">💡 Indice</button><button class="smallbtn ghost" data-action="correction" data-id="${q.id}">Voir la correction détaillée</button></div><div class="tip" id="hint-${q.id}" hidden>${esc(q.hint||'Identifie les tables, trace le chemin ON, puis ajoute WHERE, GROUP BY ou ORDER BY.')}</div>`:''}
     <div class="feedback" id="feedback-${q.id}" hidden></div>
-    <div class="answer" id="correction-${q.id}" hidden><h4>Correction et méthode</h4>${q.kind==='open'?`<p>${esc(q.sql)}</p>`:q.kind==='numeric'?`<strong>${esc(q.sql)}</strong>`:code(q.sql)}<p><strong>Explication :</strong> ${esc(q.reason)}</p>${q.kind==='open'&&!exam?`<button class="smallbtn" data-action="manual" data-id="${q.id}">✓ J’ai compris</button>`:''}</div></article>`;
+    <div class="answer" id="correction-${q.id}" hidden><h4>Correction et méthode</h4>${q.kind==='open'?`<p>${esc(q.sql)}</p>`:q.kind==='numeric'?`<strong>${esc(q.sql)}</strong>`:code(q.sql)}<p><strong>Explication :</strong> ${esc(q.reason)}</p>${q.kind==='sql'||!q.kind||q.kind==='fix'?clauseByClause(q.sql):''}${q.kind==='open'&&!exam?`<button class="smallbtn" data-action="manual" data-id="${q.id}">✓ J’ai compris</button>`:''}</div></article>`;
   }
   function pageHeader(k,t,p){return`<div class="kicker">${esc(k)}</div><h1>${esc(t)}</h1><p class="lead">${esc(p)}</p>`}
   function nav(){
